@@ -1,0 +1,9 @@
+html,
+body {
+    margin: 0;
+}
+
+canvas {
+    display: block;
+    /* inline elements with resizable height (canvas, video, audio..) has 4px gap below */
+}
