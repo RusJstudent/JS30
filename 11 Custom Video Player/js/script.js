@@ -8,8 +8,26 @@ const currentProgress = player.querySelector('.progress__filled');
 const playButton = player.querySelector('.player__button');
 const volumeInput = player.querySelector('.player__slider[name="volume"]');
 const playbackRateInput = player.querySelector('.player__slider[name="playbackRate"]');
+const fullscreenButton = player.querySelector('.fullscreen');
+
+video.ontimeupdate = e => updateProgress(); // triggers every 250 milliseconds
 
 volumeInput.oninput = playbackRateInput.oninput = e => video[e.currentTarget.name] = e.currentTarget.value;
+
+document.onkeydown = function(e) {
+    if (e.code !== 'Space') return;
+    playPause(e);
+}
+
+function playPause(e) {
+    if (video.paused) {
+        video.play();
+        playButton.textContent = '❚ ❚';
+    } else {
+        video.pause();
+        playButton.textContent = '►';
+    }
+}
 
 player.onclick = function(e) {
     const target = e.target;
@@ -22,8 +40,11 @@ player.onclick = function(e) {
         updateProgress();
     }
 
-    if (target === playButton || target === video) {
-        video.paused ? video.play() : video.pause();
+    if (target === playButton || target === video) playPause(e);
+
+    if (target === fullscreenButton) {
+        console.log('helelo');
+        player.querySelector('.viewer').classList.toggle('fullscreen');
     }
 }
 
